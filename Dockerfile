@@ -8,7 +8,7 @@ ENV HOME=/home/user \
 
 WORKDIR $HOME/app
 COPY --chown=user . $HOME/app
-RUN chmod -R 777 ./data/dataset
+RUN chmod -R 777 ./datasets/data/dataset
 
 RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 
