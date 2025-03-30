@@ -2,8 +2,6 @@ from ultralytics import YOLO, settings
 import ultralytics
 from pathlib import Path
 
-settings.update({"datasets_dir": "/home/user/app/data/dataset"})
-
 
 def model_training():
     ultralytics.settings.update({'datasets_dir': "./dataset"})
