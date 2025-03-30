@@ -1,6 +1,6 @@
-path: /home/user/app/data/dataset
+path: ./dataset
 train: /images/train
-val:   /images/val
-test:  /images/test
+val: /images/val
+test: /images/test
 nc: 5  # Number of classes
 names: ["Capacitor", "Inductor", "Resistor", "DC voltage source", "AC voltage source"]
