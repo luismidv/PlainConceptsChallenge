@@ -1,4 +1,4 @@
-path: /home/user/app/datasets/data/dataset
+path: /home/user/app/data/dataset
 train: /images/train
 val:   /images/val
 test:  /images/test
