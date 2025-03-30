@@ -1,5 +1,6 @@
-train: ./dataset/images/train
-val:   ./dataset/images/val
-test:  ./dataset/images/test
+path: data/dataset
+train: images/train
+val: images/val
+test: images/test
 nc: 5  # Number of classes
 names: ["Capacitor", "Inductor", "Resistor", "DC voltage source", "AC voltage source"]
