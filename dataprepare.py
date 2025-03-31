@@ -99,7 +99,10 @@ def analyst_starting(route, output_folder, annotations_route):
     data_analyst = DataAnalyst(route, output_folder, annotations_route)
     data_analyst.image_size_searching()
     data_analyst.xml_data_extractor()
-    dataset = CircuitDataset(data_analyst.training_features, data_analyst.training_labels, data_analyst.route,data_analyst.new_size)
-    training_loader = DataLoader(dataset, batch_size=1, shuffle=True)
-    for x,y in training_loader:
-        print("Imprimo imagen")
+    data_analyst.dataset_info_summary()
+    #dataset = CircuitDataset(data_analyst.training_features, data_analyst.training_labels, data_analyst.route,data_analyst.new_size)
+    #training_loader = DataLoader(dataset, batch_size=1, shuffle=True)
+    #for x,y in training_loader:
+    #    print("Imprimo imagen")
+
+analyst_starting()
