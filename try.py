@@ -3,8 +3,8 @@ def xml_data_extractor(mode, anotations_route):
     """THIS IS THE FUNCTION THAT WILL EXTRACT LABELS DATA FROM THE XML FILES
        THESE XML FILES DESCRIBE THE BOUNDING BOXES AROUND THE CIRCUIT ELEMENTS"""
 
-    route = "./dataset/data/dataset/images/train"
-    label_route = "./dataset/data/dataset/labels/train"
+    route = "./datasets/data/dataset/images/train"
+    label_route = "./datasets/data/dataset/labels/train"
     route = route.replace("train", mode)
     label_route = label_route.replace("train", mode)
 
@@ -15,7 +15,7 @@ def xml_data_extractor(mode, anotations_route):
         final_path = os.path.join(label_route, file)
 
 anot_route = "./dataset/data/Annotations"
-xml_data_extractor("train",anot_route)
+xml_data_extractor(mode = "train",anotations_route=anot_route)
 xml_data_extractor("test",anot_route)
 xml_data_extractor("val",anot_route)
 

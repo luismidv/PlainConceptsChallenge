@@ -119,23 +119,25 @@ class DataAnalyst():
         """THIS IS THE FUNCTION THAT WILL EXTRACT LABELS DATA FROM THE XML FILES
            THESE XML FILES DESCRIBE THE BOUNDING BOXES AROUND THE CIRCUIT ELEMENTS"""
 
-        route = "./dataset/data/dataset/images/train"
-        label_route = "./dataset/data/dataset/labels/train"
+        route = "./datasets/data/dataset/images/train"
+        label_route = "./datasets/data/dataset/labels/train"
         route = route.replace("train", mode)
         label_route = label_route.replace("train", mode)
 
         for file in os.listdir(route):
+            if file.endswith(".jpg"):
+                xml_file = os.path.join(anotations_route, file)
+                xml_file = os.path.splitext(xml_file)[0] + ".xml"
+                xml_results = self.xml_data_getter(xml_file)
+                final_path = os.path.join(label_route, os.path.splitext(file)[0])
 
-            xml_file = os.path.join(anotations_route, file)
-            xml_file = os.path.splitext(xml_file)[0] + ".xml"
-            xml_results = self.xml_data_getter(xml_file)
-            final_path = os.path.join(label_route, os.path.splitext(file)[0])
-            with open(final_path, 'w') as f:
-                for item in xml_results:
-                    x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (384,384))
-                    new_line = f"{item[0]} {x_center} {y_center} {width} {height}\n"
-                    f.write(new_line)
-            f.close()
+                with open(final_path, 'w') as f:
+
+                    for item in xml_results:
+                        x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (384,384))
+                        new_line = f"{item[0]} {x_center} {y_center} {width} {height}\n"
+                        f.write(new_line)
+                    f.close()
 
 
 
