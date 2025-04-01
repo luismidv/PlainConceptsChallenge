@@ -11,7 +11,7 @@ def xml_data_extractor(mode, anotations_route):
     for file in os.listdir(route):
         xml_file = os.path.join(anotations_route, file)
         xml_file = os.path.splitext(xml_file)[0] + ".xml"
-        xml_results = xml_data_extractor(xml_file)
+            xml_results = xml_data_extractor(xml_file)
         final_path = os.path.join(label_route, file)
 
 anot_route = "./dataset/data/Annotations"

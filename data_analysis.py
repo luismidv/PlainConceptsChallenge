@@ -135,7 +135,7 @@ class DataAnalyst():
                 with open(final_path, 'w') as f:
 
                     for item in xml_results:
-                        x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (224,2))
+                        x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (224,224))
                         new_line = f"{item[0]} {x_center} {y_center} {width} {height}\n"
                         f.write(new_line)
                     f.close()
@@ -174,15 +174,18 @@ class DataAnalyst():
         """THIS FUNCTION WILL PREPARE THE COORDINATES THEY WAY YOLO EXPECTS IT
         FIRST GET COORDINATES NORMALIZED, SINCE YOLO EXPECTS TO BE BETWEEN 0 AND 1
         THIS IS BECAUSE YOLO RESEARCHES REALISED THAT IT WAYS EASIER TO USE OFFSETS OF GRID CELLS RATHER THAN PURE COORDINATES"""
+        print(bbox_tensor)
         normalized_width = 1.0 / image_size[0]
         normalized_height = 1.0 / image_size[1]
-
+        print(normalized_width)
+        print(normalized_height)
         width = (bbox_tensor[1] - bbox_tensor[0]) * normalized_width
         height = (bbox_tensor[3] - bbox_tensor[2]) * normalized_height
 
         # GET X AND Y AXIS CENTERS
         x_center = ((bbox_tensor[1] + bbox_tensor[0]) / 2.0) * normalized_width
         y_center = ((bbox_tensor[3] + bbox_tensor[2]) / 2.0) * normalized_height
+        print(f"{x_center} {y_center} {width} {height}")
 
         return x_center, y_center, width, height
 
