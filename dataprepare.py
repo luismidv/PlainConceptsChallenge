@@ -18,12 +18,12 @@ class CircuitDataset(Dataset):
             transforms.RandomRotation(30),
             transforms.RandomAffine(degrees=10, translate=(0.1, 0.1), scale=(0.9, 1.1), shear = 10),
             transforms.RandomPerspective(distortion_scale=0.5, p = 0.5),
-            transforms.ToTensor(),
+            transforms.ToTensor()
+
         ])
         self.training_route = training_route
         self.image_size = image_size
-        self.yolo_train_labels = "./data/Training/Label"
-        self.yolo_val_labels = "./data/dataset/labels/val"
+        self.yolo_train_labels = "./dataset/data/Training/Label"
 
     def __len__(self):
         return len(self.features)
@@ -59,15 +59,13 @@ class CircuitDataset(Dataset):
 def data_asociation(mode):
     """THIS FUNCTION IS GOING TO PREPARE THE dataset FOLDER
     THIS FOLDER HAS THE STRUCTURE THAT MODELS LIKE YOLOV8 EXPECTS IN ORDER TO FINE TUNE"""
-    images = "./data/dataset/Images/train"
-    labels = "./data/dataset/labels/train"
+    images = "./dataset/data/dataset/images/train"
+    labels = "./dataset/data/dataset/labels/train"
 
     images = images.replace("train", mode)
     labels = labels.replace("train", mode)
 
-    print(images)
-    print(labels)
-    all_labels = "./data/Training/Label"
+    all_labels = "./dataset/data/Training/Label"
     for file in os.listdir(images):
         if file.endswith(".jpg"):
             new_file = os.path.join(all_labels, file)
@@ -76,33 +74,29 @@ def data_asociation(mode):
 
 
 
-def get_coordinates(bbox_tensor,image_size):
-    """THIS FUNCTION WILL PREPARE THE COORDINATES THEY WAY YOLO EXPECTS IT
-    FIRST GET COORDINATES NORMALIZED, SINCE YOLO EXPECTS TO BE BETWEEN 0 AND 1
-    THIS IS BECAUSE YOLO RESEARCHES REALISED THAT IT WAYS EASIER TO USE OFFSETS OF GRID CELLS RATHER THAN PURE COORDINATES"""
-    normalized_width = 1.0/image_size[0]
-    normalized_height = 1.0/image_size[1]
 
-
-    width = (bbox_tensor[1] - bbox_tensor[0]) * normalized_width
-    height = (bbox_tensor[3] - bbox_tensor[2]) * normalized_height
-
-    #GET X AND Y AXIS CENTERS
-    x_center = ((bbox_tensor[1] + bbox_tensor[0])/2.0) * normalized_width
-    y_center = ((bbox_tensor[3] + bbox_tensor[2])/2.0) * normalized_height
-
-    return x_center, y_center, width, height
 
 
 def analyst_starting(route, output_folder, annotations_route):
     #THIS FUNCTION IS GOING TO BE CALLED BY THE MAIN IN ORDER TO START THE JOB
     data_analyst = DataAnalyst(route, output_folder, annotations_route)
-    data_analyst.image_size_searching()
-    data_analyst.xml_data_extractor()
-    data_analyst.dataset_info_summary()
-    #dataset = CircuitDataset(data_analyst.training_features, data_analyst.training_labels, data_analyst.route,data_analyst.new_size)
-    #training_loader = DataLoader(dataset, batch_size=1, shuffle=True)
+    #data_analyst.image_size_searching()
+    #data_analyst.xml_data_extractor()
+    #data_analyst.dataset_info_summary()
+    #dataset = CircuitDataset(data_analyst.training_features, data_analyst.training_labels, data_analyst.route,(384,384))
+    #training_loader = DataLoader(dataset, batch_size=2, shuffle=True)
     #for x,y in training_loader:
     #    print("Imprimo imagen")
 
-analyst_starting()
+def analyst_starting2(route,output_folder,annotations_route):
+    data_analyst = DataAnalyst(route, output_folder, annotations_route)
+
+    data_analyst.xml_data_builder("train", annotations_route)
+    data_analyst.xml_data_builder("val",annotations_route)
+    data_analyst.xml_data_builder("test",annotations_route)
+
+
+route = "./dataset/data/Training/Images"
+output_folder = "./data/Images"
+annotations_route = "./dataset/data/Annotations/"
+analyst_starting2(route,output_folder,annotations_route)

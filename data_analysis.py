@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
 class DataAnalyst():
     def __init__(self,source_route, output_route, annotations_route):
         #ROUTE THAT I AM GOING TO USE TO READ/WRITE ON FOLDERS
@@ -115,3 +114,74 @@ class DataAnalyst():
         fig,axes = plt.subplots(1,1)
         axes.pie(elements_names, labels= elements_names.index, autopct='%1.2f%%', colors=['gold', 'skyblue', 'lightgreen', 'red', 'green'], startangle=90)
         plt.show()
+
+    def xml_data_builder(self,mode,anotations_route):
+        """THIS IS THE FUNCTION THAT WILL EXTRACT LABELS DATA FROM THE XML FILES
+           THESE XML FILES DESCRIBE THE BOUNDING BOXES AROUND THE CIRCUIT ELEMENTS"""
+
+        route = "./dataset/data/dataset/images/train"
+        label_route = "./dataset/data/dataset/labels/train"
+        route = route.replace("train", mode)
+        label_route = label_route.replace("train", mode)
+
+        for file in os.listdir(route):
+
+            xml_file = os.path.join(anotations_route, file)
+            xml_file = os.path.splitext(xml_file)[0] + ".xml"
+            xml_results = self.xml_data_getter(xml_file)
+            final_path = os.path.join(label_route, os.path.splitext(file)[0])
+            with open(final_path, 'w') as f:
+                for item in xml_results:
+                    x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (384,384))
+                    new_line = f"{item[0]} {x_center} {y_center} {width} {height}\n"
+                    f.write(new_line)
+            f.close()
+
+
+
+
+    def xml_data_getter(self, file_path):
+        """THIS IS THE FUNCTION THAT WILL EXTRACT LABELS DATA FROM THE XML FILES
+           THESE XML FILES DESCRIBE THE BOUNDING BOXES AROUND THE CIRCUIT ELEMENTS"""
+        try:
+            with open(file_path, 'r') as f:
+                result_list = []
+                file_data = f.read()
+                beauti_data = BeautifulSoup(file_data, 'lxml-xml')
+                elements_list = beauti_data.find_all('object')
+
+                for element in elements_list:
+                    name = element.find("name").text
+                    if name == "Capactitor":
+                        name = "Capacitor"
+
+                    self.elements_names.append(name)
+                    coord_x1 = element.find("xmin").text
+                    coord_x2 = element.find("xmax").text
+                    coord_y1 = element.find("ymin").text
+                    coord_y2 = element.find("ymax").text
+                    name = self.names_dict[name]
+                    coord_lines = [name,coord_x1, coord_x2, coord_y1, coord_y2]
+                    result_list.append(coord_lines)
+                return result_list
+        except Exception as e:
+            print(f"Error while reading xml files and getting their information {e}")
+
+    def get_coordinates(self,bbox_tensor, image_size):
+        """THIS FUNCTION WILL PREPARE THE COORDINATES THEY WAY YOLO EXPECTS IT
+        FIRST GET COORDINATES NORMALIZED, SINCE YOLO EXPECTS TO BE BETWEEN 0 AND 1
+        THIS IS BECAUSE YOLO RESEARCHES REALISED THAT IT WAYS EASIER TO USE OFFSETS OF GRID CELLS RATHER THAN PURE COORDINATES"""
+        normalized_width = 1.0 / image_size[0]
+        normalized_height = 1.0 / image_size[1]
+
+        width = (bbox_tensor[1] - bbox_tensor[0]) * normalized_width
+        height = (bbox_tensor[3] - bbox_tensor[2]) * normalized_height
+
+        # GET X AND Y AXIS CENTERS
+        x_center = ((bbox_tensor[1] + bbox_tensor[0]) / 2.0) * normalized_width
+        y_center = ((bbox_tensor[3] + bbox_tensor[2]) / 2.0) * normalized_height
+
+        return x_center, y_center, width, height
+
+
+
