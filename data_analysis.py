@@ -128,8 +128,9 @@ class DataAnalyst():
             if file.endswith(".jpg"):
                 xml_file = os.path.join(anotations_route, file)
                 xml_file = os.path.splitext(xml_file)[0] + ".xml"
+                xml_name = os.path.basename(xml_file)
                 xml_results = self.xml_data_getter(xml_file)
-                final_path = os.path.join(label_route, os.path.splitext(file)[0])
+                final_path = os.path.join(label_route, xml_name)
 
                 with open(final_path, 'w') as f:
 
