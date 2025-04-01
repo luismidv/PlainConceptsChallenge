@@ -59,7 +59,7 @@ class DataAnalyst():
     def image_resize_save(self):
         """THIS FUNCTION IS USED TO RESIZE THE DATASET TO THE IMAGE SIZES DEFINED BEFORE"""
         #new_size = (int(self.width_mean), int(self.height_mean))
-        self.new_size = (384,384)
+        self.new_size = (224,224)
 
         for file in os.listdir(self.route):
             file_route = os.path.join(self.route,file)
@@ -134,7 +134,7 @@ class DataAnalyst():
                 with open(final_path, 'w') as f:
 
                     for item in xml_results:
-                        x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (384,384))
+                        x_center, y_center, width, height = self.get_coordinates([int(item[1]), int(item[2]), int(item[3]), int(item[4])], (224,2))
                         new_line = f"{item[0]} {x_center} {y_center} {width} {height}\n"
                         f.write(new_line)
                     f.close()
