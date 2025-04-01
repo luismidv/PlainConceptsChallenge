@@ -129,6 +129,7 @@ class DataAnalyst():
                 xml_file = os.path.join(anotations_route, file)
                 xml_file = os.path.splitext(xml_file)[0] + ".xml"
                 xml_name = os.path.basename(xml_file)
+                xml_name = os.path.splitext(xml_name)[0] + ".txt"
                 xml_results = self.xml_data_getter(xml_file)
                 final_path = os.path.join(label_route, xml_name)
 
