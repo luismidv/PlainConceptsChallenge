@@ -15,7 +15,7 @@ def model_training():
         model.train(data="datasets/dataset.yaml", epochs=20, imgsz=244, batch = 2, device=device,verbose=True)
 
     except Exception as e:
-        print(e)
+        print(f"Error when training {e}")
 
 
 
