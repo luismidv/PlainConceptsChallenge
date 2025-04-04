@@ -7,7 +7,7 @@ The challenge consists on implemening a solution for an electrical company that 
 ![296_png rf 2fa9d963874a376b48a1d10fa6b685f8](https://github.com/user-attachments/assets/fc6eb4c2-c46e-41ec-a1fe-2f246faf3fa9)
 
 <h3>The project was developed following the next steps:</h3></br>
-  1. Analasys and first view on the dataset.</br>
+  1. Analysis and first view on the dataset.</br>
     1.1 Class distribution</br>
     1.2 Image width-height differences and resizing</br>
   2. Labeling</br>
