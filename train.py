@@ -1,7 +1,6 @@
 from ultralytics import YOLO, settings
 import ultralytics
 import torch
-from sys import ps1
 #DATA AUGMENTATION SECTION
 from ultralytics.data.augment import Albumentations
 from ultralytics.utils import LOGGER,colorstr
