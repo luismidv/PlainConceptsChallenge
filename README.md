@@ -23,6 +23,13 @@ The challenge consists on implemening a solution for an electrical company that 
      &nbsp;&nbsp;&nbsp;4.4 Re-test the model on unseen data.</br>
 </br>
 The algorithm was trained in Google Colab since HuggingFace free plan doesn't, stops the service because of too high-load for that plan.<br/>
+
+<h3> About each .py file structure</h3>
+data_analysis:  where the main data analysis and data preparation work is done.
+dataprepare: dataset preparation for the first aproximation, not used in the final project.
+train: where the training, testing steps are done.
+app.py: file created to implement API part, not finished.
+  
      
 
 BEST TRAINING METRICS:</br>
