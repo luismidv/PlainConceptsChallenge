@@ -74,43 +74,10 @@ class DataAnalyst():
             except Exception as e:
                 print(f"Error while trying to resize and save and image {e}")
 
-    def xml_data_extractor(self):
-        """THIS IS THE FUNCTION THAT WILL EXTRACT LABELS DATA FROM THE XML FILES
-           THESE XML FILES DESCRIBE THE BOUNDING BOXES AROUND THE CIRCUIT ELEMENTS"""
-        for idx,file in enumerate(os.listdir(self.annotations_route)):
-            file_labels = []
-            file_path = os.path.join(self.annotations_route, file)
-            try:
-                with open(file_path, 'r') as f:
-                    file_data = f.read()
-                    beauti_data = BeautifulSoup(file_data, 'lxml-xml')
-                    elements_list = beauti_data.find_all('object')
-                
-                    for element in elements_list:
-                        name = element.find("name").text
-                        if name =="Capactitor":
-                            name ="Capacitor"
-                        elif name == "DC voltage source":
-                            self.dc_circuits.append(idx)
-                        elif name == "AC voltage source":
-                            self.ac_circuits.append(idx)
-
-                        self.elements_names.append(name)
-                        coord_x1 = element.find("xmin").text
-                        coord_x2 = element.find("xmax").text
-                        coord_y1 = element.find("ymin").text
-                        coord_y2 = element.find("ymax").text
-                        file_labels.append([float(coord_x1), float(coord_x2), float(coord_y1), float(coord_y2), float(self.names_dict[name])])
-                self.training_labels.append(file_labels)
-            except Exception as e:
-                print(f"Error while reading xml files and getting their information {e}")
-
-
     def dataset_info_summary(self):
         """HERE I AM GOING TO VISUALIZE SOME DATASET INFORMATION, TYPICAL HEIGHT AN WIDTH, CLASS DISTRIBUTION"""
         elements_dataframe = pd.DataFrame(self.elements_names)
         elements_names =elements_dataframe.value_counts()
-        print(elements_names)
         fig,axes = plt.subplots(1,1)
         axes.pie(elements_names, labels= elements_names.index, autopct='%1.2f%%', colors=['gold', 'skyblue', 'lightgreen', 'red', 'green'], startangle=90)
         plt.show()
@@ -140,8 +107,6 @@ class DataAnalyst():
                         new_line = f"{item[0]} {x_center} {y_center} {width} {height}\n"
                         f.write(new_line)
                     f.close()
-
-
 
 
     def xml_data_getter(self, file_path):
@@ -175,11 +140,8 @@ class DataAnalyst():
         """THIS FUNCTION WILL PREPARE THE COORDINATES THEY WAY YOLO EXPECTS IT
         FIRST GET COORDINATES NORMALIZED, SINCE YOLO EXPECTS TO BE BETWEEN 0 AND 1
         THIS IS BECAUSE YOLO RESEARCHES REALISED THAT IT WAYS EASIER TO USE OFFSETS OF GRID CELLS RATHER THAN PURE COORDINATES"""
-        print(bbox_tensor)
         normalized_width = 1.0 / image_size[0]
         normalized_height = 1.0 / image_size[1]
-        print(normalized_width)
-        print(normalized_height)
         width = (bbox_tensor[1] - bbox_tensor[0]) * normalized_width
         height = (bbox_tensor[3] - bbox_tensor[2]) * normalized_height
 

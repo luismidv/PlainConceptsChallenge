@@ -1,3 +1,7 @@
+"""THIS FILE IS PART OF THE FIRST APPROXIMATION THAT I DID TO THE PROBLEM USING DATASET CLASS AND ITERATING OVER IT USING A DATALOADER
+   BUT  IT IS  NOT USED IN THE FINAL SOLUTION AFTER REALISING THAT IT WOULDN'T WORK IN ORDER TO FINE TUNE YOLOV8 FROM ULTRALYTICS
+   I KEEP IT HERE SO YOU CAN SEE HOW I USE THIS CLASSES"""
+
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
 from data_analysis import DataAnalyst
@@ -72,21 +76,6 @@ def data_asociation(mode):
             new_file = os.path.splitext(new_file)[0] + ".txt"
             shutil.copy(new_file, labels)
 
-
-
-
-
-
-def analyst_starting(route, output_folder, annotations_route):
-    #THIS FUNCTION IS GOING TO BE CALLED BY THE MAIN IN ORDER TO START THE JOB
-    data_analyst = DataAnalyst(route, output_folder, annotations_route)
-    #data_analyst.image_size_searching()
-    #data_analyst.xml_data_extractor()
-    #data_analyst.dataset_info_summary()
-    #dataset = CircuitDataset(data_analyst.training_features, data_analyst.training_labels, data_analyst.route,(384,384))
-    #training_loader = DataLoader(dataset, batch_size=2, shuffle=True)
-    #for x,y in training_loader:
-    #    print("Imprimo imagen")
 
 def analyst_starting2(route,output_folder,annotations_route):
     data_analyst = DataAnalyst(route, output_folder, annotations_route)
