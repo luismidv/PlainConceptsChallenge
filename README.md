@@ -8,19 +8,19 @@ The challenge consists on implemening a solution for an electrical company that 
 
 <h3>The project was developed following the next steps:</h3></br>
   1. Analysis and first view on the dataset.</br>
-    1.1 Class distribution</br>
-    1.2 Image width-height differences and resizing</br>
+  &nbsp;&nbsp;&nbsp;1.1 Class distribution</br>
+  &nbsp;&nbsp;&nbsp;1.2 Image width-height differences and resizing</br>
   2. Labeling</br>
-     2.1 Usage of label-studio tool to get each image labelled in XML files (PASCAL VOC FORMAT).</br>
+    &nbsp;&nbsp;&nbsp;2.1 Usage of label-studio tool to get each image labelled in XML files (PASCAL VOC FORMAT).</br>
   3. Data preparation</br>
-     3.1 Prepare a dataset class to iterate using dataloder(First approximation)</br>
-     3.2 Prepare a folder ("dataset") with images and labels for train, valid and test steps.</br>
-     3.3 Transform the XML files to .txt files that include class, x_min, y_min, w, h</br>
+     &nbsp;&nbsp;&nbsp;3.1 Prepare a dataset class to iterate using dataloder(First approximation)</br>
+     &nbsp;&nbsp;&nbsp;3.2 Prepare a folder ("dataset") with images and labels for train, valid and test steps.</br>
+     &nbsp;&nbsp;&nbsp;3.3 Transform the XML files to .txt files that include class, x_min, y_min, w, h</br>
   4. Fine-tune yolov8 model</br>
-     4.1 First fine-tune.</br>
-     4.2 Test the model on unseen data.</br>
-     4.3 Second fine-tune</br>
-     4.4 Re-test the model on unseen data.</br>
+     &nbsp;&nbsp;&nbsp;4.1 First fine-tune.</br>
+     &nbsp;&nbsp;&nbsp;4.2 Test the model on unseen data.</br>
+     &nbsp;&nbsp;&nbsp;4.3 Second fine-tune</br>
+     &nbsp;&nbsp;&nbsp;4.4 Re-test the model on unseen data.</br>
 </br>
 The algorithm was trained in Google Colab since HuggingFace free plan doesn't, stops the service because of too high-load for that plan.<br/>
      
