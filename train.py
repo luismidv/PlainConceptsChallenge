@@ -35,7 +35,7 @@ def model_training():
         device = "cuda" if torch.cuda.is_available() else "cpu"
         print("Available device: ", device)
         model = YOLO("yolov8n.pt")
-        results = model.train(data="/datasets/dataset.yaml", epochs=50, imgsz=384, batch = 2, augment = True,device=device,verbose=True)
+        results = model.train(data="./datasets/dataset.yaml", epochs=50, imgsz=384, batch = 2, augment = True,device=device,verbose=True)
 
         return model
     except Exception as e:
