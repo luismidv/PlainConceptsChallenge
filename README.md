@@ -24,7 +24,7 @@ The challenge consists on implemening a solution for an electrical company that 
 </br>
 The algorithm was trained in Google Colab since HuggingFace free plan stops the service because of too high-load for that plan.<br/>
 
-<h3> About each .py file structure</h3>
+<h3> About each .py file </h3>
 data_analysis:  where the main data analysis and data preparation work is done. <br/>
 dataprepare: dataset preparation for the first aproximation, not used in the final project.<br/>
 train: where the training, testing steps are done.<br/>
